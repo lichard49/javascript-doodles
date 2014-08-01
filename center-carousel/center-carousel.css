@@ -1,0 +1,13 @@
+div.center-carousel-wrapper
+{
+	overflow: hidden;
+	display: inline-block;
+	position: relative;
+	float: left;
+}
+
+div.center-carousel-item
+{
+	display: inline;
+	position: absolute;
+}
