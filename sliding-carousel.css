@@ -1,0 +1,13 @@
+div.sliding-carousel-wrapper
+{
+	overflow: hidden;
+	display: inline-block;
+	position: relative;
+	float: left;
+}
+
+div.sliding-carousel-item
+{
+	display: inline;
+	position: absolute;
+}
