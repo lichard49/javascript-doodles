@@ -1,3 +1,8 @@
+div.center-carousel
+{
+	margin: 15px;
+}
+
 div.center-carousel-wrapper
 {
 	overflow: hidden;
@@ -10,4 +15,16 @@ div.center-carousel-item
 {
 	display: inline;
 	position: absolute;
+}
+
+div.center-carousel-item img
+{
+	vertical-align: bottom;
+}
+
+div.center-carousel-item-caption
+{
+	display: none;
+	background-color: rgba(200, 200, 200, 0.65);
+	vertical-align: bottom;
 }

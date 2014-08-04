@@ -1,5 +1,6 @@
 /*
 	TODO: add support for captions
+	TODO: make margins respect element attributes
 */
 
 $(document).ready(function()
@@ -15,6 +16,8 @@ $(document).ready(function()
 	var carousel = $('.center-carousel');
 	var carouselItems = $('.center-carousel-item');
 	var currentItem = 0;
+
+	console.log(carousel.css('margin'));
 
 	for(var i = 0; i < carouselItems.length; i++)
 	{
@@ -46,9 +49,15 @@ $(document).ready(function()
 			'width': CENTERPIECE_WIDTH,
 			'height': CENTERPIECE_HEIGHT
 		});
+		centerPiece.find('div').css(
+		{
+			'display': 'block',
+			'position': 'relative',
+			'top': '-20px'
+		});
 		carouselItems.eq(currentItem).find('img').css('border', '1px solid #000000');
 		carouselItems.eq((currentItem-1)%carouselItems.length).find('img').css('border', '1px solid #FFFFFF');
-		console.log(centerPiece);
+//		console.log(centerPiece);
 		carousel.append(centerPiece);
 		currentItem = (currentItem+1) % carouselItems.length;
 
