@@ -5,22 +5,26 @@
 
 $(document).ready(function()
 {
-	var WIDTH = 50;
-	var HEIGHT = 50;
-	var CENTERPIECE_HEIGHT = 100;
-	var CENTERPIECE_WIDTH = 100;
-	var PADDING = 10;
-	var MARGIN = 0;
-	var TIME_INTERVAL = 1000;
-
 	var carousel = $('.center-carousel');
 	var carouselItems = $('.center-carousel-item');
 	var currentItem = 0;
+
+	var CENTERPIECE_HEIGHT = carouselItems.eq(0).find('img').height();
+	var CENTERPIECE_WIDTH = carouselItems.eq(0).find('img').width();
+	
+
+	var PADDING = 10;
+	var MARGIN = 0;	
+	var WIDTH = (CENTERPIECE_WIDTH-PADDING*carouselItems.length)/carouselItems.length-(PADDING/carouselItems.length);
+	var HEIGHT = 50;
+
+	var TIME_INTERVAL = 1000;
 
 	console.log(carousel.css('margin'));
 
 	for(var i = 0; i < carouselItems.length; i++)
 	{
+		carouselItems.eq(i).data('index', i);
 		carouselItems.eq(i).css(
 		{
 			'left': i*(WIDTH+PADDING)+MARGIN+PADDING,
@@ -32,10 +36,16 @@ $(document).ready(function()
 			'height': HEIGHT,
 			'border': '1px solid #FFFFFF'
 		});
+		carouselItems.eq(i).on('click', function() { updateCenterPiece($(this).data('index')); } );
 	}
 
-	(function updateCenterPiece()
+	function updateCenterPiece(index)
 	{
+		console.log(currentItem);
+		carouselItems.eq(currentItem).find('img').css('border', '1px solid #FFFFFF');
+		currentItem = index;
+		console.log(currentItem);
+
 		$('#centerPiece').remove();
 		var centerPiece = carouselItems.eq(currentItem).clone();
 		centerPiece.attr('id', 'centerPiece');
@@ -47,20 +57,27 @@ $(document).ready(function()
 		centerPiece.find('img').css(
 		{
 			'width': CENTERPIECE_WIDTH,
-			'height': CENTERPIECE_HEIGHT
+			'height': CENTERPIECE_HEIGHT,
+			'-moz-border-radius-topleft': '6px',
+			'border-top-left-radius': '6px',
+			'-moz-border-radius-topright': '6px',
+			'border-top-right-radius': '6px'
 		});
 		centerPiece.find('div').css(
 		{
 			'display': 'block',
 			'position': 'relative',
-			'top': '-20px'
+			'top': '-30px',
+			'width': CENTERPIECE_WIDTH-10
 		});
 		carouselItems.eq(currentItem).find('img').css('border', '1px solid #000000');
-		carouselItems.eq((currentItem-1)%carouselItems.length).find('img').css('border', '1px solid #FFFFFF');
-//		console.log(centerPiece);
 		carousel.append(centerPiece);
-		currentItem = (currentItem+1) % carouselItems.length;
-
-		setTimeout(updateCenterPiece, TIME_INTERVAL);
-	})();
+		
+		setTimeout(incrementCenterPiece, TIME_INTERVAL);
+	};
+	function incrementCenterPiece()
+	{
+		updateCenterPiece((currentItem+1) % carouselItems.length);
+	}
+	updateCenterPiece(0);
 });
